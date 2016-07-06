@@ -85,7 +85,7 @@ html {
 /* Large screens (1024px) */
 @media (min-width: 1024px) {
   html { font-size: 120%; }
-}
+
     .column {
          float: left;
          padding-left: 1rem;
@@ -99,3 +99,4 @@ html {
      .column.fourth { width: 25%; }
      .column.flow-opposite { float: right; }
     }
+}
