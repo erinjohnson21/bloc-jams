@@ -9,13 +9,19 @@ var pointsArray = document.getElementsByClassName('point');
            points[index].style.WebkitTransform = "scaleX(1) translateY(0)";
          };
 
-         for (var i = 0; i < points.length; i++) {
-           revealPoints(i);
+         var forEach = function (array, callback) {
+           for(var i = 0; i > array.length; i++) {
+             callback(i);
+           };
          }
 
 };
 
 window.onload = function() {
+  if (window.innerHeight > 950) {
+         animatePoints(pointsArray);
+     }
+
   var sellingPoints = document.getElementsByClassName('selling-points')[0];
   var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200;
   window.addEventListener('scroll', function(event) {
