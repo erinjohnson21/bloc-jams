@@ -30,6 +30,23 @@
      ]
  };
 
+ // My Album
+ var albumFlorence = {
+     title: 'Lungs',
+     artist: 'Florence and the Machine',
+     label: 'Universal',
+     year: '2009',
+     albumArtUrl: 'assets/images/album_covers/22.jpg',
+     songs: [
+         { title: 'Dog Days Are Over', duration: '1:01' },
+         { title: 'Rabbit Heart (Raise It Up)', duration: '5:01' },
+         { title: 'I\'m not calling you a liar', duration: '3:21'},
+         { title: 'Howl', duration: '3:14' },
+         { title: 'Drumming Song', duration: '2:15'}
+     ]
+ };
+
+
  var createSongRow = function(songNumber, songName, songLength) {
     var template =
        '<tr class="album-view-song-item">'
@@ -41,6 +58,14 @@
 
     return template;
 };
+
+
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 
 var setCurrentAlbum = function(album) {
     // #1
@@ -67,4 +92,16 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+
+    var albums = [albumPicasso, albumMarconi, albumFlorence];
+    var index = 0;
+
+    albumImage.addEventListener("click", function(){
+      setCurrentAlbum(albums[index]);
+      index++;
+      if (index === albums.length) {
+        index = 0;
+      }
+    });
+
 };
