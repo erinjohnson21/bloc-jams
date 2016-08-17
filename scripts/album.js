@@ -79,7 +79,11 @@ window.onload = function() {
 
 //Change the Song Number to the Pause Button
     var findParentByClassName = function (element, targetClass){
-      if (element) {
+      if (element.parentElement === null) {
+        alert("No Parent Found"); 
+    } else if (element.parentElement.className === null) {
+        alert("No parent found with that class name");
+    } else  {
         var currentParent = element.parentElement;
         while (currentParent.className !== targetClass && currentParent.className !== null){
             currentParent = currentParent.parentElement;
