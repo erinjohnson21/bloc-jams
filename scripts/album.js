@@ -78,16 +78,16 @@ window.onload = function() {
     setCurrentAlbum(albumPicasso);
 
 //Change the Song Number to the Pause Button
-    var findParentByClassName = function (element, targetClass){
-      if (element.parentElement === null) {
-        alert("No Parent Found"); 
-    } else if (element.parentElement.className === null) {
-        alert("No parent found with that class name");
-    } else  {
-        var currentParent = element.parentElement;
-        while (currentParent.className !== targetClass && currentParent.className !== null){
-            currentParent = currentParent.parentElement;
-          }
+    var findParentByClassName = function (element, targetClass) {
+      var currentParent = element.parentElement;
+      if (currentParent === null) {
+        alert("No Parent Found");
+      } else if (currentParent.className.indexOf(targetClass) < 0) {
+          alert("No parent found with that class name");
+      } else {
+        while (currentParent && currentParent.className !== targetClass && currentParent.className !== null) {
+          currentParent = currentParent.parentElement;
+        }
         return currentParent;
       }
     };
