@@ -19,15 +19,14 @@ var buildCollectionItemTemplate = function() {
 
 
    $(window).load(function() {
-     // #1
-     //var collectionContainer = document.getElementsByClassName('album-covers')[0];
+
      var $collectionContainer = $('.album-covers');
-     //collectionContainer.innerHTML = '';
+
      $collectionContainer.empty();
 
      // #3
      for (var i = 0; i < 12; i++) {
-         //collectionContainer.innerHTML += collectionItemTemplate;
+        
          var $newThumbnail = buildCollectionItemTemplate();
          $collectionContainer.append($newThumbnail);
      }
