@@ -58,6 +58,14 @@ var createSongRow = function(songNumber, songName, songLength) {
      // #3
     return $row;
 };
+var updatePlayerBarSong = function() {
+  $('.currently-playing .song-name').text(currentSongFromAlbum.title);
+  $('.currently-playing .artist-name').text(currentAlbum.artist);
+  $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
+  $('.main-controls .play-pause').html(playerBarPauseButton);
+};
+
+
 
 var setCurrentAlbum = function(album) {
    currentAlbum = album;
