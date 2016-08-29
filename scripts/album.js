@@ -118,6 +118,7 @@ var nextSong = function() {
 
     // Set a new current song
     setSong(currentSongIndex + 1);
+    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
     $('.currently-playing .song-name').text(currentSongFromAlbum.title);
