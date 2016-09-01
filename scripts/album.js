@@ -55,9 +55,16 @@ var createSongRow = function(songNumber, songName, songLength) {
              setSong(songNumber);
              currentSoundFile.play();
              updateSeekBarWhileSongPlays();
-             $(this).html(pauseButtonTemplate);
              currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+
+             var $volumeFill = $('.volume .fill');
+             var $volumeThumb = $('.volume .thumb');
+             $volumeFill.width(currentVolume + '%');
+             $volumeThumb.css({left: currentVolume + '%'});
+
+             $(this).html(pauseButtonTemplate);
              updatePlayerBarSong();
+
          } else if (currentlyPlayingSongNumber === songNumber) {
            if (currentSoundFile.isPaused()) {
              $(this).html(pauseButtonTemplate);
@@ -165,7 +172,12 @@ var setupSeekBars = function() {
          // #4
          var seekBarFillRatio = offsetX / barWidth;
 
-         // #5
+         if ($(this).parent().attr('class') == 'seek-control') {
+            seek(seekBarFillRatio * currentSoundFile.getDuration());
+         } else {
+            setVolume(seekBarFillRatio * 100);
+         }
+
          updateSeekPercentage($(this), seekBarFillRatio);
      });
 
@@ -178,6 +190,12 @@ var setupSeekBars = function() {
             var offsetX = event.pageX - $seekBar.offset().left;
             var barWidth = $seekBar.width();
             var seekBarFillRatio = offsetX / barWidth;
+
+            if ($seekBar.parent().attr('class') == 'seek-control') {
+                seek(seekBarFillRatio * currentSoundFile.getDuration());
+            } else {
+                setVolume(seekBarFillRatio);
+            }
 
             updateSeekPercentage($seekBar, seekBarFillRatio);
         });
@@ -262,17 +280,23 @@ var togglePlayFromPlayerBar = function () {
     var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
     currentlyPlayingCell.html(currentlyPlayingSongNumber);
 
+    if (!currentSoundFile) {
+      setSong(1);
+    }
+
     if (currentSoundFile.isPaused()) {
       $(this).html(pauseButtonTemplate);
       $('.main-controls .play-pause').html(playerBarPauseButton);
       currentSoundFile.play();
       currentlyPlayingCell.html(pauseButtonTemplate);
+      updateSeekBarWhileSongPlays();
     } else if (currentSoundFile.play()) {
 
       $(this).html(playButtonTemplate);
       $('.main-controls .play-pause').html(playerBarPlayButton);
       currentSoundFile.pause();
       currentlyPlayingCell.html(playButtonTemplate);
+      updateSeekBarWhileSongPlays();
     }
 };
 
