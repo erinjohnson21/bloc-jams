@@ -162,31 +162,70 @@ var trackIndex = function(album, song) {
 //
 // };
 
-var nextSong = function() {
-
-    // var getLastSongNumber = function(index) {
-    //     return index == 0 ? currentAlbum.songs.length : index;
-    // };
-
-    currentSongIndex++;
-
-    if (currentSongIndex >= currentAlbum.songs.length) {
-        currentSongIndex = 0;
-    }
+// var nextSong = function() {
+//
+//     // var getLastSongNumber = function(index) {
+//     //     return index == 0 ? currentAlbum.songs.length : index;
+//     // };
+//
+//     currentSongIndex++;
+//
+//     if (currentSongIndex >= currentAlbum.songs.length) {
+//         currentSongIndex = 0;
+//     }
+// };
+//
+// var previousSong = function() {
+//
+//     // var getLastSongNumber = function(index) {
+//     //     return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
+//     // };
+//
+//
+//     currentSongIndex--;
+//
+//     if (currentSongIndex < 0) {
+//         currentSongIndex = currentAlbum.songs.length - 1;
+//     }
+// };
+var getLastSongNumber = function() {
+  return 1;
 };
 
-var previousSong = function() {
-
-    // var getLastSongNumber = function(index) {
-    //     return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
-    // };
-
-
+var changeSong = function(previous) {
+  var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+  
+  if (previous) {
+    // change to previousSong
     currentSongIndex--;
 
     if (currentSongIndex < 0) {
         currentSongIndex = currentAlbum.songs.length - 1;
     }
+  } else {
+    // change to nextSong
+    currentSongIndex++;
+
+    if (currentSongIndex >= currentAlbum.songs.length) {
+        currentSongIndex = 0;
+    }
+  }
+
+  //From orignal function
+
+
+  setSong(currentSongIndex + 1);
+  currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
+
+  // Update the Player Bar information
+  updatePlayerBarSong();
+
+  var lastSongNumber = getLastSongNumber(currentSongIndex);
+  var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+  var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
+
+  $nextSongNumberCell.html(pauseButtonTemplate);
+  $lastSongNumberCell.html(lastSongNumber);
 };
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
@@ -204,6 +243,6 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
-  $previousButton.click(previousSong);
-  $nextButton.click(nextSong);
+  $previousButton.click(changeSong.bind(null, true));
+  $nextButton.click(changeSong);
 });
